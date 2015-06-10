@@ -1,24 +1,27 @@
 package ru.bmstu.schedule.calendar;
 
-import java.net.URL;
 import java.util.HashSet;
 
+import ru.bmstu.schedule.calendar.helpers.Logger;
 import android.support.v7.app.ActionBarActivity;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract.Calendars;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
+	Logger logger;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		logger = new Logger((TextView) findViewById(R.id.hello));
 		
 		Cursor cursor = null;
     	ContentResolver cr = getContentResolver();
@@ -27,33 +30,23 @@ public class MainActivity extends ActionBarActivity {
 
     	cursor = cr.query(uri, (new String[] { Calendars._ID, Calendars.CALENDAR_DISPLAY_NAME, Calendars.OWNER_ACCOUNT}), null, null, null);
     	HashSet<String> calendarIds = new HashSet<String>();
-    	System.out.println("Count="+cursor.getCount());
+    	
+    	logger.clear();
+    	logger.log("Count="+cursor.getCount());
         if(cursor.getCount() > 0)
         {
-            System.out.println("the control is just inside of the cursor.count loop");
+        	logger.log("the control is just inside of the cursor.count loop");
 	        while (cursor.moveToNext()) {
-	             String _id = cursor.getString(0);
-	             String displayName = cursor.getString(1);
-	             Boolean selected = !cursor.getString(2).equals("0");
+	            String _id = cursor.getString(0);
+	            String displayName = cursor.getString(1);
+	            Boolean selected = !cursor.getString(2).equals("0");
 	
-	            System.out.println("Id: " + _id + " Display Name: " + displayName + " Selected: " + selected);
+	            logger.log("Id: " + _id + " Display Name: " + displayName + " Selected: " + selected);
 	            calendarIds.add(_id);
 	        }
         }
 
 	}
-
-	private static final int PROJECTION_ID_INDEX = 0;
-	private static final int PROJECTION_ACCOUNT_NAME_INDEX = 1;
-	private static final int PROJECTION_DISPLAY_NAME_INDEX = 2;
-	private static final int PROJECTION_OWNER_ACCOUNT_INDEX = 3;
-	
-	public static final String[] EVENT_PROJECTION = new String[] {
-	    Calendars._ID,                           // 0
-	    Calendars.ACCOUNT_NAME,                  // 1
-	    Calendars.CALENDAR_DISPLAY_NAME,         // 2
-	    Calendars.OWNER_ACCOUNT                  // 3
-	};
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
