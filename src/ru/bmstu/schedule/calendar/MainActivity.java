@@ -45,8 +45,13 @@ public class MainActivity extends ActionBarActivity {
 	            calendarIds.add(_id);
 	        }
         }
-
-	}
+        cursor.close();
+        
+        Event e = new Event("mihanik001@gmail.com", "Event", "Hello world!").setrRuleOnce();
+        logger.log(e);
+        e.save(cr, calendarIds.iterator().next());
+        
+   	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

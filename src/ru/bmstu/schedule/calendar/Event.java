@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
 import android.text.format.Time;
+import android.util.Log;
 
 
 
@@ -91,7 +92,15 @@ public class Event {
 		Time yearEnd = new Time();
 		yearEnd.set(0, 0, 0, 1, 6, 2016);
 		
-		this.setDtstart(new Time())
+		Time dt = new Time();
+		Date now = new Date();
+		
+		dt.set(now.getSeconds(), now.getMinutes(), now.getHours(),
+				now.getDate(), now.getMonth(), now.getYear()+1900);
+		Log.v("now:", dt.toString());
+		Log.v("ms:", Long.toString(dt.toMillis(false)));
+		
+		this.setDtstart(dt)
 			.setDuration(getOnePairDuration())
 			.setEventLocation(DEFAULT_LOCATION)
 			.setEventTimezone(DEFAULT_TIMEZONE)
@@ -101,11 +110,17 @@ public class Event {
 	}
 	
 	public void save(ContentResolver resolver, int calendarId) {
+		save(resolver, Integer.toString(calendarId));
+	}
+	
+	public void save(ContentResolver resolver, String calendarId) {
+		Log.v("Event.save", "Starting save");
 		Cursor cur = null;
 		try {
 			cur = findExising(resolver, calendarId);
+			Log.v("Searching for existing", "Found rows:" + cur.getCount());
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e("Event.save try/catch", e.getMessage());
 		}
 		
 		ContentValues mDataValues = new ContentValues();
@@ -114,20 +129,25 @@ public class Event {
 		mDataValues.put(Events.ORGANIZER, organiser);
 		mDataValues.put(Events.TITLE, title);
 		mDataValues.put(Events.DESCRIPTION, description);
-		mDataValues.put(Events.DTSTART, dtstart.format2445());
+		mDataValues.put(Events.DTSTART, dtstart.toMillis(false));
 		mDataValues.put(Events.DURATION, duration);
 		mDataValues.put(Events.EVENT_LOCATION, eventLocation);
-		mDataValues.put(Events.EVENT_TIMEZONE, eventTimezone.getDisplayName());
+		mDataValues.put(Events.EVENT_TIMEZONE, eventTimezone.getID());
 		mDataValues.put(Events.ALL_DAY, allDay);
 		mDataValues.put(Events.RRULE, rRule);
 		mDataValues.put(Events.AVAILABILITY, available);
 		
 		if (null != cur && cur.getCount() > 0) {
+			Log.v("Event.save if", "Found existing");
+			cur.moveToFirst();
 			mDataValues.put(Events._ID, cur.getString(0));
+			cur.close();
 			update(resolver, mDataValues);
 		} else {
+			Log.v("Event.save else", "Nothing found");
 			insert(resolver, mDataValues);
 		}
+		Log.v("Event.save end", "Save over");
 	}
 	
 	private static void update(ContentResolver resolver, ContentValues values) {
@@ -137,17 +157,35 @@ public class Event {
 	}
 	
 	private static void insert(ContentResolver resolver, ContentValues values) {
+		Log.v("Insert", values.toString());
 		resolver.insert(Events.CONTENT_URI, values);
 	}
 	
-	private Cursor findExising(ContentResolver resolver, int calendarId) throws Exception {
-		String[] mSelectionArgs = {
-			Integer.toString(calendarId)
-		};
+	private Cursor findExising(ContentResolver resolver, String calendarId) throws Exception {
+		StringBuilder queryBuilder = new StringBuilder();
+		queryBuilder.append('(').append(Events.CALENDAR_ID).append(" = ?").append(')')
+		.append(" AND ").append('(').append(Events.TITLE).append(" = ?").append(')');
+		
+		String query = queryBuilder.toString();
+		String[] mSelectionArgs = {	calendarId, title};
 		Cursor c = resolver.query(Events.CONTENT_URI, EVENT_BASIC_PROJECTION,
-				Events.CALENDAR_ID+" = ?", mSelectionArgs, null);
+				query, mSelectionArgs, null);
 		if (null == c)
 			throw new Exception("Null query result");
+		try {
+			while (c.moveToNext()) {
+	            String _id = c.getString(0);
+	            String calId = c.getString(1);
+	            String organiser =  c.getString(2);
+	            String title = c.getString(3);
+	
+	            Log.v("Found row", "Id: " + _id + " Calendar: " + calId + " Organiser: " + organiser + " Title: "+title);
+	        }
+		} catch (Exception e) {
+			Log.e("Find existing log output", e.getMessage());
+		} finally {
+			c.moveToFirst();
+		}
 		return c;
 	}
 
@@ -231,6 +269,11 @@ public class Event {
 		this.rRule = rRule;
 		return this;
 	}
+	
+	public Event setrRuleOnce() {
+		this.rRule = "FREQ=DAILY;COUNT=1";
+		return this;
+	}
 
 	public boolean isAvailable() {
 		return available;
@@ -241,4 +284,14 @@ public class Event {
 		return this;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder b = new StringBuilder();
+		b.append(" == ").append(title).append(" == ").append('\n')
+		.append("Organiser: ").append(organiser).append('\n')
+		.append(description).append('\n')
+		.append("Time: ").append(dtstart)
+		.append(" === \n");
+		return b.toString();
+	}
 }
