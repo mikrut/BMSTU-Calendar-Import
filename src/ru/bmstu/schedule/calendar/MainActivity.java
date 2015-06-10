@@ -36,14 +36,13 @@ public class MainActivity extends ActionBarActivity {
     			Calendars.ACCOUNT_TYPE,
     			Calendars.CALENDAR_COLOR,
     			Calendars.CALENDAR_ACCESS_LEVEL,
-    			Calendars.OWNER_ACCOUNT}), null, null, null);
+    			Calendars.OWNER_ACCOUNT,
+    			Calendars.CALENDAR_DISPLAY_NAME}), null, null, null);
     	HashSet<String> calendarIds = new HashSet<String>();
     	
     	logger.clear();
-    	logger.log("Count="+cursor.getCount());
         if(cursor.getCount() > 0)
         {
-        	logger.log("the control is just inside of the cursor.count loop");
 	        while (cursor.moveToNext()) {
 	            String name = cursor.getString(0);
 	            String accountName = cursor.getString(3);
@@ -52,20 +51,24 @@ public class MainActivity extends ActionBarActivity {
 	            String accessLevel = cursor.getString(6);
 	            String owner = cursor.getString(7);
 	
-	           /* logger.log("Name: " + name);
-	            logger.log("Acc Name: " + accountName);
-	            logger.log("AccType: " + accountType);
-	            logger.log("CalCol" + calendarColor);
-	            logger.log("CalAcsLev" + accessLevel);
-	            logger.log("owner" + owner);*/
+	            logger.log("Name: " + name);
+	            //logger.log("Acc Name: " + accountName);
+	            //logger.log("AccType: " + accountType);
+	            //logger.log("CalCol: " + calendarColor);
+	            logger.log("dispName: "+cursor.getString(8));
+	            //logger.log("CalAcsLev" + accessLevel);
+	            //logger.log("owner" + owner);
 	        }
         }
         cursor.close();
-       Calendar cal = Calendar.findByName("mihanik001@gmail.com", cr);
-       logger.log(cal);
-       /* Event e = new Event("mihanik001@gmail.com", "Event", "Hello world!").setrRuleOnce();
-        logger.log(e);
-        e.save(cr, calendarIds.iterator().next());*/
+        Calendar cal = Calendar.findByName("mihanik001@gmail.com", cr);
+        logger.log(cal);
+        cal = new Calendar("testcalen", "mihanik001@gmail.com", cr);
+        cal.save();
+        logger.log("Deleted: " + Calendar.deleteByName("testcalen", "mihanik001@gmail.com", cr));
+        /*Event e = new Event("mihanik001@gmail.com", "Event", "Hello world!").setrRuleOnce();
+        logger.log(e);s
+        e.save(cr, cal.getId());*/
    	}
 
 	@Override

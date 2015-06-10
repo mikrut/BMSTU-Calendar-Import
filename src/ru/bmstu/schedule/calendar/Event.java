@@ -117,8 +117,8 @@ public class Event {
 			.setAvailable(false);
 	}
 	
-	public void save(ContentResolver resolver, int calendarId) {
-		save(resolver, Integer.toString(calendarId));
+	public void save(ContentResolver resolver, long l) {
+		save(resolver, Long.toString(l));
 	}
 	
 	public void save(ContentResolver resolver, String calendarId) {
