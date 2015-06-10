@@ -27,8 +27,8 @@ public class Event {
 	private String rRule;
 	private boolean available;
 	
-	private final static String DEFAULT_LOCATION = "BMSTU";
-	private final static TimeZone DEFAULT_TIMEZONE = TimeZone.getDefault();
+	private static String defaultLocation = "BMSTU";
+	private static TimeZone defaultTimezone = TimeZone.getDefault();
 	
 	private static final String[] EVENT_PROJECTION = {
 		Events._ID,
@@ -84,6 +84,14 @@ public class Event {
 		return rfc2445Duration(1, 35, 0);
 	}
 	
+	public static void setDefaultLocation(String loc) {
+		defaultLocation = loc;
+	}
+	
+	public static void setDefaultTimezone(TimeZone tz) {
+		defaultTimezone = tz;
+	}
+	
 	public Event(String organiser, String title, String description) {
 		this.organiser = organiser;
 		this.title = title;
@@ -102,8 +110,8 @@ public class Event {
 		
 		this.setDtstart(dt)
 			.setDuration(getOnePairDuration())
-			.setEventLocation(DEFAULT_LOCATION)
-			.setEventTimezone(DEFAULT_TIMEZONE)
+			.setEventLocation(defaultLocation)
+			.setEventTimezone(defaultTimezone)
 			.setAllDay(false)
 			.setrRule("FREQ=WEEKLY;UNTIL="+yearEnd.format2445())
 			.setAvailable(false);
@@ -114,11 +122,9 @@ public class Event {
 	}
 	
 	public void save(ContentResolver resolver, String calendarId) {
-		Log.v("Event.save", "Starting save");
 		Cursor cur = null;
 		try {
 			cur = findExising(resolver, calendarId);
-			Log.v("Searching for existing", "Found rows:" + cur.getCount());
 		} catch (Exception e) {
 			Log.e("Event.save try/catch", e.getMessage());
 		}
@@ -138,16 +144,13 @@ public class Event {
 		mDataValues.put(Events.AVAILABILITY, available);
 		
 		if (null != cur && cur.getCount() > 0) {
-			Log.v("Event.save if", "Found existing");
 			cur.moveToFirst();
 			mDataValues.put(Events._ID, cur.getString(0));
 			cur.close();
 			update(resolver, mDataValues);
 		} else {
-			Log.v("Event.save else", "Nothing found");
 			insert(resolver, mDataValues);
 		}
-		Log.v("Event.save end", "Save over");
 	}
 	
 	private static void update(ContentResolver resolver, ContentValues values) {
@@ -157,7 +160,6 @@ public class Event {
 	}
 	
 	private static void insert(ContentResolver resolver, ContentValues values) {
-		Log.v("Insert", values.toString());
 		resolver.insert(Events.CONTENT_URI, values);
 	}
 	
@@ -172,20 +174,6 @@ public class Event {
 				query, mSelectionArgs, null);
 		if (null == c)
 			throw new Exception("Null query result");
-		try {
-			while (c.moveToNext()) {
-	            String _id = c.getString(0);
-	            String calId = c.getString(1);
-	            String organiser =  c.getString(2);
-	            String title = c.getString(3);
-	
-	            Log.v("Found row", "Id: " + _id + " Calendar: " + calId + " Organiser: " + organiser + " Title: "+title);
-	        }
-		} catch (Exception e) {
-			Log.e("Find existing log output", e.getMessage());
-		} finally {
-			c.moveToFirst();
-		}
 		return c;
 	}
 
@@ -271,7 +259,7 @@ public class Event {
 	}
 	
 	public Event setrRuleOnce() {
-		this.rRule = "FREQ=DAILY;COUNT=1";
+		this.rRule = "FREQ=DAILY;COUNT=2";
 		return this;
 	}
 
