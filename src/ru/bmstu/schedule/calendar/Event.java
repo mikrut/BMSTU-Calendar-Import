@@ -45,6 +45,19 @@ public class Event {
 		Events.AVAILABILITY
 	};
 	
+	private static final int PROJECTION_ID_INDEX = 0;
+	private static final int PROJECTION_CALENDAR_ID_INDEX = 1;
+	private static final int PROJECTION_ORGANIZER_INDEX = 2;
+	private static final int PROJECTION_TITLE_INDEX = 3;
+	private static final int PROJECTION_DESCRIPTION_INDEX = 4;
+	private static final int PROJECTION_DTSTART_INDEX = 5;
+	private static final int PROJECTION_DURATION_INDEX = 6;
+	private static final int PROJECTION_EVENT_LOCATION_INDEX = 7;
+	private static final int PROJECTION_EVENT_TIMEZONE_INDEX = 8;
+	private static final int PROJECTION_ALL_DAY_INDEX = 9;
+	private static final int PROJECTION_RRULE_INDEX = 10;
+	private static final int PROJECTION_AVAILABILITY_INDEX = 11;
+	
 	private static final String[] EVENT_BASIC_PROJECTION = {
 		Events._ID,
 		Events.CALENDAR_ID,
@@ -52,6 +65,12 @@ public class Event {
 		Events.TITLE,
 		Events.DTSTART
 	};
+	
+	private static final int BASIC_PROJECTION_ID_INDEX = 0;
+	private static final int BASIC_PROJECTION_CALENDAR_ID_INDEX = 1;
+	private static final int BASIC_PROJECTION_ORGANIZER_INDEX = 2;
+	private static final int BASIC_PROJECTION_TITLE_INDEX = 3;
+	private static final int BASIC_PROJECTION_DTSTART_INDEX = 4;
 	
 	private static String rfc2445Duration(int d, int h, int m, int s) {
 		StringBuilder builder = new StringBuilder();
@@ -145,7 +164,7 @@ public class Event {
 		
 		if (null != cur && cur.getCount() > 0) {
 			cur.moveToFirst();
-			mDataValues.put(Events._ID, cur.getString(0));
+			mDataValues.put(Events._ID, cur.getString(BASIC_PROJECTION_ID_INDEX));
 			cur.close();
 			update(resolver, mDataValues);
 		} else {
@@ -164,11 +183,12 @@ public class Event {
 	}
 	
 	private Cursor findExising(ContentResolver resolver, String calendarId) throws Exception {
-		StringBuilder queryBuilder = new StringBuilder();
-		queryBuilder.append('(').append(Events.CALENDAR_ID).append(" = ?").append(')')
-		.append(" AND ").append('(').append(Events.TITLE).append(" = ?").append(')');
+		String query = new StringBuilder()
+		.append('(').append(Events.CALENDAR_ID).append(" = ?").append(')')
+		.append(" AND ")
+		.append('(').append(Events.TITLE).append(" = ?").append(')')
+		.toString();
 		
-		String query = queryBuilder.toString();
 		String[] mSelectionArgs = {	calendarId, title};
 		Cursor c = resolver.query(Events.CONTENT_URI, EVENT_BASIC_PROJECTION,
 				query, mSelectionArgs, null);
