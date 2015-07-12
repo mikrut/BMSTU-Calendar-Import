@@ -8,7 +8,6 @@ import java.util.TimeZone;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
 import android.text.format.Time;
 import android.util.Log;
@@ -19,13 +18,15 @@ public class Event {
 	private String organiser;
 	private String title;
 	private String description;
-	private Time dtstart;
+	private Calendar dtstart;
 	private String duration;
 	private String eventLocation;
 	private TimeZone eventTimezone;
 	private boolean allDay;
 	private String rRule;
 	private boolean available;
+	
+	private String yearEndRFC2445;
 	
 	private static String defaultLocation = "BMSTU";
 	private static TimeZone defaultTimezone = TimeZone.getDefault();
@@ -111,28 +112,28 @@ public class Event {
 		defaultTimezone = tz;
 	}
 	
-	public Event(String organiser, String title, String description) {
-		this.organiser = organiser;
+	public Event(String organiserEmail, String title, String description, Calendar yearEnd) {
+		this.organiser = organiserEmail;
 		this.title = title;
 		this.description = description;
+				
+		Calendar now = Calendar.getInstance();
 		
-		Time yearEnd = new Time();
-		yearEnd.set(0, 0, 0, 1, 6, 2016);
+		Time helper = new Time();
+		helper.set(yearEnd.get(Calendar.SECOND),
+				   yearEnd.get(Calendar.MINUTE),
+				   yearEnd.get(Calendar.HOUR),
+				   yearEnd.get(Calendar.DAY_OF_MONTH),
+				   yearEnd.get(Calendar.MONTH),
+				   yearEnd.get(Calendar.YEAR));
+		yearEndRFC2445 = helper.format2445();
 		
-		Time dt = new Time();
-		Date now = new Date();
-		
-		dt.set(now.getSeconds(), now.getMinutes(), now.getHours(),
-				now.getDate(), now.getMonth(), now.getYear()+1900);
-		Log.v("now:", dt.toString());
-		Log.v("ms:", Long.toString(dt.toMillis(false)));
-		
-		this.setDtstart(dt)
+		this.setDtstart(now)
 			.setDuration(getOnePairDuration())
 			.setEventLocation(defaultLocation)
 			.setEventTimezone(defaultTimezone)
 			.setAllDay(false)
-			.setrRule("FREQ=WEEKLY;UNTIL="+yearEnd.format2445())
+			.setrRule("FREQ=WEEKLY;UNTIL="+yearEndRFC2445)
 			.setAvailable(false);
 	}
 	
@@ -141,35 +142,21 @@ public class Event {
 	}
 	
 	public void save(ContentResolver resolver, String calendarId) {
-		Cursor cur = null;
-		try {
-			cur = findExising(resolver, calendarId);
-		} catch (Exception e) {
-			Log.e("Event.save try/catch", e.getMessage());
-		}
-		
 		ContentValues mDataValues = new ContentValues();
 		
 		mDataValues.put(Events.CALENDAR_ID, calendarId);
 		mDataValues.put(Events.ORGANIZER, organiser);
 		mDataValues.put(Events.TITLE, title);
 		mDataValues.put(Events.DESCRIPTION, description);
-		mDataValues.put(Events.DTSTART, dtstart.toMillis(false));
+		mDataValues.put(Events.DTSTART, dtstart.getTimeInMillis());
 		mDataValues.put(Events.DURATION, duration);
 		mDataValues.put(Events.EVENT_LOCATION, eventLocation);
 		mDataValues.put(Events.EVENT_TIMEZONE, eventTimezone.getID());
-		mDataValues.put(Events.ALL_DAY, allDay);
+		mDataValues.put(Events.ALL_DAY, allDay ? 1 : 0);
 		mDataValues.put(Events.RRULE, rRule);
 		mDataValues.put(Events.AVAILABILITY, available);
 		
-		if (null != cur && cur.getCount() > 0) {
-			cur.moveToFirst();
-			mDataValues.put(Events._ID, cur.getString(BASIC_PROJECTION_ID_INDEX));
-			cur.close();
-			update(resolver, mDataValues);
-		} else {
-			insert(resolver, mDataValues);
-		}
+		insert(resolver, mDataValues);
 	}
 	
 	private static void update(ContentResolver resolver, ContentValues values) {
@@ -224,11 +211,11 @@ public class Event {
 		return this;
 	}
 
-	public Time getDtstart() {
+	public Calendar getDtstart() {
 		return dtstart;
 	}
 
-	public Event setDtstart(Time dtstart) {
+	public Event setDtstart(Calendar dtstart) {
 		this.dtstart = dtstart;
 		return this;
 	}
@@ -278,6 +265,11 @@ public class Event {
 		return this;
 	}
 	
+	public Event setrRuleTwoWeeks() {
+		this.rRule = "FREQ=WEEKLY;UNTIL="+yearEndRFC2445+";INTERVAL=2";
+		return this;
+	}
+	
 	public Event setrRuleOnce() {
 		this.rRule = "FREQ=DAILY;COUNT=2";
 		return this;
@@ -294,11 +286,21 @@ public class Event {
 	
 	@Override
 	public String toString() {
+		Time helper = new Time();
+		helper.set(dtstart.get(Calendar.SECOND),
+				   dtstart.get(Calendar.MINUTE),
+				   dtstart.get(Calendar.HOUR),
+				   dtstart.get(Calendar.DAY_OF_MONTH),
+				   dtstart.get(Calendar.MONTH),
+				   dtstart.get(Calendar.YEAR));	
 		StringBuilder b = new StringBuilder();
 		b.append(" == ").append(title).append(" == ").append('\n')
 		.append("Organiser: ").append(organiser).append('\n')
 		.append(description).append('\n')
-		.append("Time: ").append(dtstart)
+		.append("Time: ").append(dtstart.getTime()).append('\n')
+		.append("TInMills: ").append(dtstart.getTimeInMillis()).append('\n')
+		.append("For Time: ").append(helper.toMillis(true)).append('\n')
+		.append("rRule: ").append(rRule).append('\n')
 		.append(" === \n");
 		return b.toString();
 	}

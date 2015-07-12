@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Calendars;
+import android.provider.CalendarContract.Events;
 
 public class Calendar {
 	private long    id;
@@ -110,6 +111,12 @@ public class Calendar {
 		String query = "(" + Calendars.NAME + " = ?)";
 		String[] args = {name};
 		return resolver.delete(calUri, query, args);
+	}
+	
+	public void deleteAllEvents() {
+		String mSelectionClause = Events.CALENDAR_ID + " = ?";
+		String[] mSelectionArgs = {String.valueOf(getId())};
+		resolver.delete(Events.CONTENT_URI, mSelectionClause, mSelectionArgs);
 	}
 	
 	public static Calendar findByName(String name, ContentResolver resolver) {
