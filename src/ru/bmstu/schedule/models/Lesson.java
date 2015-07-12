@@ -194,8 +194,6 @@ public class Lesson {
 		beginDayOfYear = semesterStart.get(Calendar.DAY_OF_YEAR)+wday-beginDayOfWeek;
 		if (wday < beginDayOfWeek) {
 			beginDayOfYear += 7;
-			if (term == RepeatType.NUMERATOR)
-				beginDayOfYear += 7;
 		}
 		
 		Calendar beginDateTime = Calendar.getInstance(semesterStart.getTimeZone(), Locale.getDefault());
@@ -217,8 +215,6 @@ public class Lesson {
 		
 		if (term != RepeatType.ALL)
 			e.setrRuleTwoWeeks();
-		if (wday < 2)
-			Log.i("toEvent", beginDateTime.getTime().toLocaleString());//
 		return e;
 	}
 
