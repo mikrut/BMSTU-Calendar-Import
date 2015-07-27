@@ -1,21 +1,7 @@
 package ru.bmstu.schedule.models;
 
 import java.lang.reflect.Array;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
-//import java.time.DayOfWeek;
-
-
-
-
-
-
-
-
-
 import java.util.Locale;
 
 import org.json.JSONArray;
@@ -24,7 +10,6 @@ import org.json.JSONObject;
 
 import ru.bmstu.schedule.calendar.Event;
 import android.support.annotation.Nullable;
-import android.text.format.Time;
 import android.util.Log;
 
 public class Lesson {
@@ -86,7 +71,7 @@ public class Lesson {
 	
 	private static RepeatType getTerm(JSONObject lessonJSON) {
 		// term ::= 17-all | 17-w1 | 17-w2
-		// i.e. ALL, NUMERATOR (неделя числителя), DENOMINATOR (абаз знаменателя)
+		// i.e. ALL, NUMERATOR (неделя числителя), DENOMINATOR (неделя знаменателя)
 		try {
 			if (lessonJSON.has("term"))
 				switch (lessonJSON.getString("term").charAt(4)) {
@@ -163,12 +148,12 @@ public class Lesson {
 		return b.toString();
 	}
 	
-	public Time getDTime(Calendar d) {
-		Time t = new Time();
-		t.set(0, timetable[pairIndex][0][1], timetable[pairIndex][0][0],
-				d.get(Calendar.DAY_OF_MONTH),
-				d.get(Calendar.MONTH),
-				d.get(Calendar.YEAR));
+	public Calendar getDTime(Calendar d) {
+		Calendar t = (Calendar) d.clone();
+		t.set(Calendar.SECOND, 0);
+		t.set(Calendar.MILLISECOND, 0);
+		t.set(Calendar.HOUR_OF_DAY, timetable[pairIndex][0][0]);
+		t.set(Calendar.MINUTE, timetable[pairIndex][0][1]);
 		return t;
 	}
 	
@@ -188,7 +173,6 @@ public class Lesson {
 		// Converting SUNDAY = 1 to 6, MONDAY = 2 to 0, TUE = 3 to 1 etc.
 		// to make them compatible with wday.
 		int beginDayOfWeek = (semesterStart.get(Calendar.DAY_OF_WEEK)+(7-Calendar.MONDAY))%7;
-		int endDayOfWeek = (semesterEnd.get(Calendar.DAY_OF_WEEK)+(7-Calendar.MONDAY))%7;
 		
 		int beginDayOfYear;
 		beginDayOfYear = semesterStart.get(Calendar.DAY_OF_YEAR)+wday-beginDayOfWeek;

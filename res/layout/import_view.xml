@@ -8,14 +8,14 @@
         android:id="@+id/textViewGroupHelper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Medium Text"
+        android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Button
         android:id="@+id/buttonDoImport"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:gravity="left"
+        android:gravity="start"
         android:text="@string/do_imort" />
 
 </LinearLayout>

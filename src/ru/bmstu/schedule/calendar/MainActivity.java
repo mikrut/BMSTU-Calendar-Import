@@ -1,38 +1,14 @@
 package ru.bmstu.schedule.calendar;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Locale;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import ru.bmstu.schedule.calendar.helpers.CalendarSaver;
 import ru.bmstu.schedule.calendar.helpers.FacultyExpandableListAdapter;
 import ru.bmstu.schedule.calendar.helpers.Logger;
-import ru.bmstu.schedule.calendar.helpers.ModelsInitializer;
-import ru.bmstu.schedule.models.Auditorium;
-import ru.bmstu.schedule.models.Group;
-import ru.bmstu.schedule.models.Lecturer;
-import ru.bmstu.schedule.models.Lesson;
-import ru.bmstu.schedule.models.Lesson.DescriptionBuilder;
-import ru.bmstu.schedule.models.Stream;
-import ru.bmstu.schedule.models.Lesson.ActivityType;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
 	Logger logger;

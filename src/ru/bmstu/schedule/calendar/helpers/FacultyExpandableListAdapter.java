@@ -2,19 +2,13 @@ package ru.bmstu.schedule.calendar.helpers;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import ru.bmstu.schedule.calendar.SuggestDoImportActivity;
 import ru.bmstu.schedule.models.Cathedra;
 import ru.bmstu.schedule.models.Group;
-import android.R;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;

@@ -3,17 +3,19 @@ package ru.bmstu.schedule.calendar;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.CalendarContract.Events;
-import android.text.format.Time;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import android.util.Log;
 
-
-
+@SuppressWarnings("unused")
 public class Event {
 	private String organiser;
 	private String title;
@@ -73,16 +75,6 @@ public class Event {
 	private static final int BASIC_PROJECTION_TITLE_INDEX = 3;
 	private static final int BASIC_PROJECTION_DTSTART_INDEX = 4;
 	
-	private static String rfc2445Duration(int d, int h, int m, int s) {
-		StringBuilder builder = new StringBuilder();
-		builder.append('P').append(d).append('D')
-		.append('T')
-		.append(h).append('H')
-		.append(m).append('M')
-		.append(s).append('S');
-		return builder.toString();
-	}
-	
 	private static String rfc2445Duration(int h, int m, int s) {
 		StringBuilder builder = new StringBuilder();
 		builder.append('P').append('T')
@@ -92,13 +84,14 @@ public class Event {
 		return builder.toString();
 	}
 	
-	private static String rfc2445Duration(Time start, Time end) {
-		long diff = end.toMillis(false) - start.toMillis(false);
+	private static String rfc2445Duration(Date start, Date end) {
+		long diff = end.getTime() - start.getTime();
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTimeInMillis(diff);
-		Date t = calendar.getTime();
-		return rfc2445Duration(t.getHours(), t.getMinutes(), t.getSeconds());
+		return rfc2445Duration(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
 	}
+	
+	private static final DateFormat rfc2445DateTime = new SimpleDateFormat("yyyyMMdd'T'hhmmss", new Locale("ru"));
 	
 	private static String getOnePairDuration() {
 		return rfc2445Duration(1, 35, 0);
@@ -118,15 +111,7 @@ public class Event {
 		this.description = description;
 				
 		Calendar now = Calendar.getInstance();
-		
-		Time helper = new Time();
-		helper.set(yearEnd.get(Calendar.SECOND),
-				   yearEnd.get(Calendar.MINUTE),
-				   yearEnd.get(Calendar.HOUR),
-				   yearEnd.get(Calendar.DAY_OF_MONTH),
-				   yearEnd.get(Calendar.MONTH),
-				   yearEnd.get(Calendar.YEAR));
-		yearEndRFC2445 = helper.format2445();
+		yearEndRFC2445 = rfc2445DateTime.format(yearEnd.getTime());
 		
 		this.setDtstart(now)
 			.setDuration(getOnePairDuration())
@@ -286,20 +271,13 @@ public class Event {
 	
 	@Override
 	public String toString() {
-		Time helper = new Time();
-		helper.set(dtstart.get(Calendar.SECOND),
-				   dtstart.get(Calendar.MINUTE),
-				   dtstart.get(Calendar.HOUR),
-				   dtstart.get(Calendar.DAY_OF_MONTH),
-				   dtstart.get(Calendar.MONTH),
-				   dtstart.get(Calendar.YEAR));	
 		StringBuilder b = new StringBuilder();
 		b.append(" == ").append(title).append(" == ").append('\n')
 		.append("Organiser: ").append(organiser).append('\n')
 		.append(description).append('\n')
 		.append("Time: ").append(dtstart.getTime()).append('\n')
 		.append("TInMills: ").append(dtstart.getTimeInMillis()).append('\n')
-		.append("For Time: ").append(helper.toMillis(true)).append('\n')
+		.append("For Time: ").append(dtstart.getTime().getTime()).append('\n')
 		.append("rRule: ").append(rRule).append('\n')
 		.append(" === \n");
 		return b.toString();
