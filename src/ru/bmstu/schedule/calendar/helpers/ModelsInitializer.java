@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -54,6 +55,27 @@ public class ModelsInitializer {
         	Log.e("Parsing JSON", e.getLocalizedMessage());
         }
         return null;
+	}
+	
+	public static List<Group> getGroupsForCathedra(InputStream jsonData, String cathedraName) {
+		return getGroupsForCathedra(jsonData, cathedraName, "UTF-8");
+	}
+	
+	public static List<Group> getGroupsForCathedra(InputStream jsonData, String cathedraName, String encoding) {
+		final ArrayList<Group> groups = new ArrayList<Group>();
+		try {
+			String json = fileToString(jsonData, encoding);
+        	JSONObject all = new JSONObject(json);
+			extractInfo(all, groupDefaultName, Group.class, new SimpleHandler<Group>() {
+				@Override
+				public void handle(Group object) {
+					groups.add(object);
+				}
+			});
+		} catch (JSONException e) {
+        	Log.e("Parsing JSON", e.getLocalizedMessage());
+        }
+		return groups;
 	}
 	
 	private static String fileToString(InputStream jsonFile, String encoding) {

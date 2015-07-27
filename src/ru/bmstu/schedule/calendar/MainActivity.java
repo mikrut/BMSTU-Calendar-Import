@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import ru.bmstu.schedule.calendar.helpers.CalendarSaver;
+import ru.bmstu.schedule.calendar.helpers.FacultyExpandableListAdapter;
 import ru.bmstu.schedule.calendar.helpers.Logger;
 import ru.bmstu.schedule.calendar.helpers.ModelsInitializer;
 import ru.bmstu.schedule.models.Auditorium;
@@ -29,6 +30,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 public class MainActivity extends ActionBarActivity {
@@ -39,20 +42,10 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		logger = new Logger((TextView) findViewById(R.id.hello));
-		logger.clear();
-        
-		java.util.Calendar semesterStart = java.util.Calendar.getInstance();
-		java.util.Calendar semesterEnd = java.util.Calendar.getInstance();
-		semesterEnd.add(java.util.Calendar.WEEK_OF_YEAR, 18);
-		semesterEnd.set(java.util.Calendar.DAY_OF_WEEK, semesterEnd.getFirstDayOfWeek());
-		semesterEnd.set(java.util.Calendar.HOUR, 0);
-		semesterEnd.set(java.util.Calendar.MINUTE, 0);
-		semesterEnd.set(java.util.Calendar.SECOND, 0);
-		
-		CalendarSaver cs = new CalendarSaver(semesterStart, semesterEnd, "Расписание МГТУ", "mihanik001@gmail.com", getContentResolver());
+		ExpandableListView lv = (ExpandableListView) this.findViewById(R.id.expandableGroupList);
 		try {
-			cs.saveToCalendar(getAssets().open("rasp.json"), "example@example.com", "РЛ1-52");
+			ExpandableListAdapter adapter = new FacultyExpandableListAdapter(this, getAssets().open("rasp.json"));
+			lv.setAdapter(adapter);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

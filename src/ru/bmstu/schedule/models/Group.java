@@ -22,6 +22,10 @@ public class Group extends UIDgettable {
 		UIDgettable.addObject(group.getString("uid"), this);
 	}
 	
+	public Group(String name) {
+		this.name = name;
+	}
+	
 	@Override
 	public String toString() {
 		return name;

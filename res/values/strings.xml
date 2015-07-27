@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">Calendar for BMSTU</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="your_choice">Ваш выбор</string>
+    <string name="do_imort">Импортировать</string>
 
 </resources>
