@@ -1,8 +1,10 @@
 package ru.bmstu.schedule.calendar;
 
 import java.io.IOException;
+
 import ru.bmstu.schedule.calendar.helpers.FacultyExpandableListAdapter;
 import ru.bmstu.schedule.calendar.helpers.Logger;
+import ru.bmstu.schedule.calendar.helpers.UniversityStructureReader;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,6 +25,18 @@ public class MainActivity extends ActionBarActivity {
 			ExpandableListAdapter adapter = new FacultyExpandableListAdapter(this, getAssets().open("rasp.json"));
 			lv.setAdapter(adapter);
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		java.util.Map<String, java.util.List<String>> un;
+		try {
+			un = UniversityStructureReader.getFaculties(getAssets().open("university.xml"));
+		
+			for (String key: un.keySet()) {
+				android.util.Log.v("parser", un.get(key).get(0));
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
    	}
