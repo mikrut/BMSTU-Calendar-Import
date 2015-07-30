@@ -4,7 +4,13 @@ import java.io.IOException;
 
 import ru.bmstu.schedule.calendar.helpers.CalendarSaver;
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.ContentUris;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.support.v4.media.MediaDescriptionCompatApi21.Builder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,13 +34,19 @@ public class SuggestDoImportActivity extends Activity {
 				semesterEnd.set(java.util.Calendar.HOUR, 0);
 				semesterEnd.set(java.util.Calendar.MINUTE, 0);
 				semesterEnd.set(java.util.Calendar.SECOND, 0);
-				
-				CalendarSaver cs = new CalendarSaver(semesterStart, semesterEnd, "Расписание МГТУ", "mihanik001@gmail.com", getContentResolver());
+				CalendarSaver cs = new CalendarSaver(semesterStart, semesterEnd, getString(R.string.calendar_name), "mihanik001@gmail.com", getContentResolver());
 				try {
 					Bundle extras = activity.getIntent().getExtras();
 					if (null != extras) {
 						cs.saveToCalendar(getAssets().open("rasp.json"), "example@example.com", extras.getString("CHOOSEN_GROUP_NAME"));
-					}										
+					}
+					
+					long startMillis = System.currentTimeMillis();
+					Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
+					builder.appendPath("time");
+					ContentUris.appendId(builder, startMillis);
+					Intent openCalendar = new Intent(Intent.ACTION_VIEW).setData(builder.build());
+					startActivity(openCalendar);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

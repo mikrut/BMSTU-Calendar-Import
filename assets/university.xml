@@ -1,87 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <university>
-  <faculty name="ÐË">
-    <cathedra name="ÐË1"/>
-    <cathedra name="ÐË2"/>
-    <cathedra name="ÐË3"/>
-    <cathedra name="ÐË4"/>
-    <cathedra name="ÐË5"/>
-    <cathedra name="ÐË6"/>
-    <cathedra name="ÐË7"/>
-    <cathedra name="ÐË8"/>
-    <cathedra name="ÐË9"/>
-    <cathedra name="ÐË10"/>
+  <faculty name="Ð‘ÐœÐ¢">
+      <cathedra name="Ð‘ÐœÐ¢1"/>
   </faculty>
-  <faculty name="ÌÒ">
-    <cathedra name="ÌÒ1"/>
-    <cathedra name="ÌÒ2"/>
-    <cathedra name="ÌÒ3"/>
-    <cathedra name="ÌÒ4"/>
-    <cathedra name="ÌÒ5"/>
-    <cathedra name="ÌÒ6"/>
-    <cathedra name="ÌÒ7"/>
-    <cathedra name="ÌÒ8"/>
-    <cathedra name="ÌÒ9"/>
-    <cathedra name="ÌÒ10"/>
+  <faculty name="Ð Ð›">
+    <cathedra name="Ð Ð›1"/>
+    <cathedra name="Ð Ð›2"/>
+    <cathedra name="Ð Ð›3"/>
+    <cathedra name="Ð Ð›4"/>
+    <cathedra name="Ð Ð›5"/>
+    <cathedra name="Ð Ð›6"/>
+    <cathedra name="Ð Ð›7"/>
+    <cathedra name="Ð Ð›8"/>
   </faculty>
-  <faculty name="ÈÓ">
-    <cathedra name="ÈÓ1"/>
-    <cathedra name="ÈÓ2"/>
-    <cathedra name="ÈÓ3"/>
-    <cathedra name="ÈÓ4"/>
-    <cathedra name="ÈÓ5"/>
-    <cathedra name="ÈÓ6"/>
-    <cathedra name="ÈÓ7"/>
-    <cathedra name="ÈÓ8"/>
-    <cathedra name="ÈÓ9"/>
-    <cathedra name="ÈÓ10"/>
-  </faculty>
-  <faculty name="ÑÌ">
-    <cathedra name="ÑÌ1"/>
-    <cathedra name="ÑÌ2"/>
-    <cathedra name="ÑÌ3"/>
-    <cathedra name="ÑÌ4"/>
-    <cathedra name="ÑÌ5"/>
-    <cathedra name="ÑÌ6"/>
-    <cathedra name="ÑÌ7"/>
-    <cathedra name="ÑÌ8"/>
-    <cathedra name="ÑÌ9"/>
-    <cathedra name="ÑÌ10"/>
-  </faculty>
-  <faculty name="Ý">
-    <cathedra name="Ý1"/>
-    <cathedra name="Ý2"/>
-    <cathedra name="Ý3"/>
-    <cathedra name="Ý4"/>
-    <cathedra name="Ý5"/>
-    <cathedra name="Ý6"/>
-    <cathedra name="Ý7"/>
-    <cathedra name="Ý8"/>
-    <cathedra name="Ý9"/>
-    <cathedra name="Ý10"/>
-  </faculty>
-  <faculty name="ÔÍ">
-    <cathedra name="ÔÍ1"/>
-    <cathedra name="ÔÍ2"/>
-    <cathedra name="ÔÍ3"/>
-    <cathedra name="ÔÍ4"/>
-    <cathedra name="ÔÍ5"/>
-    <cathedra name="ÔÍ6"/>
-    <cathedra name="ÔÍ7"/>
-    <cathedra name="ÔÍ8"/>
-    <cathedra name="ÔÍ9"/>
-    <cathedra name="ÔÍ10"/>
-  </faculty>
-  <faculty name="ÁÌÒ">
-    <cathedra name="ÁÌÒ1"/>
-    <cathedra name="ÁÌÒ2"/>
-    <cathedra name="ÁÌÒ3"/>
-    <cathedra name="ÁÌÒ4"/>
-    <cathedra name="ÁÌÒ5"/>
-    <cathedra name="ÁÌÒ6"/>
-    <cathedra name="ÁÌÒ7"/>
-    <cathedra name="ÁÌÒ8"/>
-    <cathedra name="ÁÌÒ9"/>
-    <cathedra name="ÁÌÒ10"/>
+  <faculty name="Ð˜Ð£">
+      <cathedra name="Ð˜Ð£1"/>
   </faculty>
 </university>

@@ -30,10 +30,13 @@ public class UniversityStructureReader {
 				String facultyName = faculty.getAttributes().getNamedItem("name").getNodeValue();
 				NodeList cathedraNodes = faculty.getChildNodes();
 				
-				List<String> cathedras = new ArrayList<String>(cathedraNodes.getLength());
+				List<String> cathedras = new ArrayList<String>(cathedraNodes.getLength() / 2);
 				for (int j = 0; j < cathedraNodes.getLength(); j++) {
-					String cathedraName = cathedraNodes.item(j).getAttributes().getNamedItem("name").getNodeValue();
-					cathedras.add(cathedraName);
+					Node cath = cathedraNodes.item(j);
+					if (cath.getNodeType() == Node.ELEMENT_NODE) {
+						String cathedraName = cath.getAttributes().getNamedItem("name").getNodeValue();
+						cathedras.add(cathedraName);
+					}
 				}
 				
 				faculties.put(facultyName, cathedras);

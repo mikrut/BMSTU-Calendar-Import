@@ -42,6 +42,24 @@ public class Lesson {
 	private Group[] groups = null;
 	
 	private String defaultUndefinedName = "Unknown";
+	private static String lectureName = "Lecture";
+	public static String getLectureName() {
+	    return lectureName;
+	}
+
+	public static void setLectureName(String lectureName) {
+	    Lesson.lectureName = lectureName;
+	}
+
+	public static String getSeminarName() {
+	    return seminarName;
+	}
+
+	public static void setSeminarName(String seminarName) {
+	    Lesson.seminarName = seminarName;
+	}
+
+	private static String seminarName = "Seminar";
 	
 	public Lesson(JSONObject lessonJSON) throws JSONException {
 		if (lessonJSON.has("time"))
@@ -71,7 +89,7 @@ public class Lesson {
 	
 	private static RepeatType getTerm(JSONObject lessonJSON) {
 		// term ::= 17-all | 17-w1 | 17-w2
-		// i.e. ALL, NUMERATOR (неделя числителя), DENOMINATOR (неделя знаменателя)
+		// i.e. ALL, NUMERATOR (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ), DENOMINATOR (пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ)
 		try {
 			if (lessonJSON.has("term"))
 				switch (lessonJSON.getString("term").charAt(4)) {
@@ -211,9 +229,9 @@ public class Lesson {
 	}
 
 	public String getName() {
-		String postfix = "Семинар";
+		String postfix = seminarName;
 		if (groups.length > 1)
-			postfix = "Лекция";
+			postfix = lectureName;
 		if (name != null) return name + " (" + postfix + ")";
 		else return defaultUndefinedName;
 	}
