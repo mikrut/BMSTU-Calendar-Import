@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NumberPickerPreference">
+        <attr name="android:title"/>
+        <attr name="android:summary"/>
+        <attr name="android:key"/>
+        <attr name="android:defaultValue"/>              
+        <attr name="min" format="integer" />
+        <attr name="max" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="DayView">
+        <attr name="android:id"/>
+        <attr name="android:layout_width" />
+        <attr name="android:layout_height" />
+        <attr name="dayName" format="string" />
+    </declare-styleable>
+</resources>

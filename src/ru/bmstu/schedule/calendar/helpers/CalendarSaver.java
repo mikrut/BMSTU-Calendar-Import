@@ -19,86 +19,77 @@ public class CalendarSaver {
 	private String calendarName;
 	private String userName;
 	private ContentResolver resolver;
-	
+
 	private static String teacherCall = "Teacher";
 	private static String auditoriumCall = "Auditorium";
 	private static String groupsCall = "Groups";
-	
+
 	public static String getTeacherCall() {
-	    return teacherCall;
+		return teacherCall;
 	}
 
 	public static void setTeacherCall(String teacherCall) {
-	    CalendarSaver.teacherCall = teacherCall;
+		CalendarSaver.teacherCall = teacherCall;
 	}
 
 	public static String getAuditoriumCall() {
-	    return auditoriumCall;
+		return auditoriumCall;
 	}
 
 	public static void setAuditoriumCall(String auditoriumCall) {
-	    CalendarSaver.auditoriumCall = auditoriumCall;
+		CalendarSaver.auditoriumCall = auditoriumCall;
 	}
 
 	public static String getGroupsCall() {
-	    return groupsCall;
+		return groupsCall;
 	}
 
 	public static void setGroupsCall(String groupsCall) {
-	    CalendarSaver.groupsCall = groupsCall;
+		CalendarSaver.groupsCall = groupsCall;
 	}
-	
+
 	private DescriptionBuilder builder = new DescriptionBuilder() {
-		public String build(String lecturer, String auditorium, String name, String groups, ActivityType actType){
-			return new StringBuilder(128)
-			.append(teacherCall+": ").append(lecturer).append('\n')
-			.append(auditoriumCall+": ").append(auditorium).append('\n')
-			.append(groupsCall+": ").append(groups)
-			.toString();
+		public String build(String lecturer, String auditorium, String name,
+				String groups, ActivityType actType) {
+			return new StringBuilder(128).append(teacherCall + ": ")
+					.append(lecturer).append('\n')
+					.append(auditoriumCall + ": ").append(auditorium)
+					.append('\n').append(groupsCall + ": ").append(groups)
+					.toString();
 		}
 	};
-	
-	public CalendarSaver(
-			java.util.Calendar semesterStart,
-			java.util.Calendar semesterEnd,
-			String calendarName,
-			String userName,
-			ContentResolver resolver) {
+
+	public CalendarSaver(java.util.Calendar semesterStart,
+			java.util.Calendar semesterEnd, String calendarName,
+			String userName, ContentResolver resolver) {
 		this.semesterStart = semesterStart;
 		this.semesterEnd = semesterEnd;
 		this.calendarName = calendarName;
 		this.resolver = resolver;
 		this.userName = userName;
 	}
-	
-	public void saveToCalendarByGroupUID(InputStream jsonData, String organizerEmail, String groupUID) {
-		try {
-			saveToCalendar(jsonData, organizerEmail, ((Group) UIDgettable.getByUID(groupUID)).getName());
-		} catch (ClassCastException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
+
+	public void saveToCalendarByGroupUID(List<Lesson> lessons,	String organizerEmail) {
+		saveToCalendar(lessons, organizerEmail);
 	}
-	
-	public void saveToCalendar(InputStream jsonData, String organizerEmail, String groupName) {
-		List<Lesson> ls = ModelsInitializer.readLessonsFromJSON(jsonData);
-		ru.bmstu.schedule.calendar.Calendar cal = ru.bmstu.schedule.calendar.Calendar.findByName(calendarName, resolver);
+
+	public void saveToCalendar(List<Lesson> lessons, String organizerEmail) {
+		ru.bmstu.schedule.calendar.Calendar cal = ru.bmstu.schedule.calendar.Calendar
+				.findByName(calendarName, resolver);
 		if (cal == null) {
-			cal = new ru.bmstu.schedule.calendar.Calendar(calendarName, userName, resolver);
+			cal = new ru.bmstu.schedule.calendar.Calendar(calendarName,
+					userName, resolver);
 			cal.save();
 		} else {
 			cal.deleteAllEvents();
 		}
 		Log.v("SaveToCalendar", cal.toString());
-		for (Lesson l : ls) {
-			if (l.hasGroup(groupName)) {
-				Event e = l.toEvent(semesterStart, semesterEnd, organizerEmail, builder);
-				e.save(resolver, cal.getId());
-			}
+		for (Lesson l : lessons) {
+			Event e = l.toEvent(semesterStart, semesterEnd, organizerEmail,	builder);
+			e.save(resolver, cal.getId());
 		}
 	}
-	
+
 	public void setBuilder(DescriptionBuilder builder) {
 		this.builder = builder;
 	}

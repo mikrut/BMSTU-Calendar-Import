@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_sound_entries">
+        <item >Без звука</item>
+        <item >Виброзвонок</item>
+        <item >Оставить как есть</item>
+    </string-array>
+    <string-array name="pref_sound_entriesValues">
+        <item >@string/SOUND_DISABLED</item>
+        <item >@string/SOUND_VIBRO</item>
+        <item >@string/SOUND_NOCHANGE</item>
+    </string-array>
+    
+</resources>

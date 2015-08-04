@@ -10,22 +10,22 @@ import org.json.JSONObject;
 public class Group extends UIDgettable {
 	private String name;
 	private Set<String> streamUIDs = new HashSet<String>();
-	
+
 	public Group(JSONObject group) throws JSONException {
 		name = group.getString("name");
-		
+
 		Iterator<?> keys = group.keys();
-		while( keys.hasNext() ) {
-		    String key = (String)keys.next();
-		    streamUIDs.add(key);
+		while (keys.hasNext()) {
+			String key = (String) keys.next();
+			streamUIDs.add(key);
 		}
 		UIDgettable.addObject(group.getString("uid"), this);
 	}
-	
+
 	public Group(String name) {
 		this.name = name;
 	}
-	
+
 	@Override
 	public String toString() {
 		return name;

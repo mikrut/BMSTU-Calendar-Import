@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:shrinkColumns="1" >
+    <TableRow
+        android:background="#004D72"
+        android:layout_width="match_parent"
+        android:gravity="center">
+         <TextView
+             android:id="@+id/title"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="#ffffff" />
+    </TableRow>
+    <TableRow android:background="#888888">
+         <TextView
+             android:id="@+id/time"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+         <TextView
+             android:id="@+id/lesson"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+    </TableRow>
+    <TableRow android:background="#ffffff">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+    </TableRow>
+    <TableRow android:background="#888888">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+    </TableRow>
+    <TableRow android:background="#ffffff">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+    </TableRow>
+    <TableRow android:background="#888888">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+    </TableRow>
+    <TableRow android:background="#ffffff">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+    </TableRow>
+    <TableRow android:background="#888888">
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+         <TextView
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"/>
+    </TableRow>
+
+</TableLayout>

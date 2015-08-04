@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <ListPreference
+        android:key="pref_sound"
+        android:title="@string/pref_sound"
+        android:dialogTitle="@string/pref_sound"
+        android:summary="@string/pref_sound_summary"
+        android:entries="@array/pref_sound_entries"
+        android:entryValues="@array/pref_sound_entriesValues"
+        android:defaultValue="@string/SOUND_DISABLED" />
+    <SwitchPreference
+        android:key="pref_alarm"
+        android:title="@string/pref_alarm"
+        android:summaryOn="@string/pref_alarmOn"
+        android:summaryOff="@string/pref_alarmOff"
+        android:defaultValue="false" />
+    <ru.bmstu.schedule.graph.NumberPickerPreference
+        android:key="pref_pairNoAlarm"
+        android:title="@string/prefPairNoAlarm"
+        android:summary="@string/prefPairNoAlarmSummary"
+        min="2"
+        max="5"
+        android:defaultValue="2" />
+    <ru.bmstu.schedule.graph.NumberPickerPreference
+        android:key="pref_alarmTime"
+        android:title="@string/prefAlarmTime"
+        android:summary="@string/prefAlarmTimeSummary"
+        min="1"
+        max="4"
+        android:defaultValue="2" />
+    <RingtonePreference
+        android:key="pref_alarmSound"
+        android:ringtoneType="alarm"
+        android:showSilent="false"
+        android:title="@string/prefAlarmSound"
+        android:summary="@string/prefAlarmSoundSummary"/>
+
+</PreferenceScreen>

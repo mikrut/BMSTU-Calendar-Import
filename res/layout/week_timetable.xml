@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/ru.bmstu.schedule.calendar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+	<LinearLayout
+	    android:id="@+id/linLayout"
+	    android:layout_width="fill_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical" >
+	    
+	    <TextView 
+	        android:text="@string/weekTimetable"
+	        android:layout_gravity="center_horizontal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="32dip"/>
+	    
+	    <ru.bmstu.schedule.graph.DayView
+	        android:layout_width="match_parent"
+  				android:layout_height="wrap_content"
+	        dayName="Понедельник"/>
+	    <ru.bmstu.schedule.graph.DayView
+	        android:layout_width="match_parent"
+  				android:layout_height="wrap_content"
+	        dayName="Вторник"/>
+	    <ru.bmstu.schedule.graph.DayView
+	        android:layout_width="match_parent"
+  				android:layout_height="wrap_content"
+	        dayName="Среда"/>
+	    <ru.bmstu.schedule.graph.DayView
+	        android:layout_width="match_parent"
+  				android:layout_height="wrap_content"
+	        dayName="Четверг"/>
+	    <ru.bmstu.schedule.graph.DayView
+	        android:layout_width="match_parent"
+  				android:layout_height="wrap_content"
+	        dayName="Пятница"/>
+	    <ru.bmstu.schedule.graph.DayView
+	        android:layout_width="match_parent"
+  				android:layout_height="wrap_content"
+	        dayName="Суббота"/>
+	    
+	</LinearLayout>
+</ScrollView>

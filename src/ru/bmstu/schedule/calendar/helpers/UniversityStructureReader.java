@@ -20,25 +20,30 @@ public class UniversityStructureReader {
 	public static Map<String, List<String>> getFaculties(InputStream dataFile) {
 		Map<String, List<String>> faculties = null;
 		try {
-			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			DocumentBuilder builder = DocumentBuilderFactory.newInstance()
+					.newDocumentBuilder();
 			Document data = builder.parse(dataFile);
 			NodeList facultyNodes = data.getElementsByTagName("faculty");
-			
-			faculties = new HashMap<String, List<String>>(facultyNodes.getLength());
+
+			faculties = new HashMap<String, List<String>>(
+					facultyNodes.getLength());
 			for (int i = 0; i < facultyNodes.getLength(); i++) {
 				Node faculty = facultyNodes.item(i);
-				String facultyName = faculty.getAttributes().getNamedItem("name").getNodeValue();
+				String facultyName = faculty.getAttributes()
+						.getNamedItem("name").getNodeValue();
 				NodeList cathedraNodes = faculty.getChildNodes();
-				
-				List<String> cathedras = new ArrayList<String>(cathedraNodes.getLength() / 2);
+
+				List<String> cathedras = new ArrayList<String>(
+						cathedraNodes.getLength() / 2);
 				for (int j = 0; j < cathedraNodes.getLength(); j++) {
 					Node cath = cathedraNodes.item(j);
 					if (cath.getNodeType() == Node.ELEMENT_NODE) {
-						String cathedraName = cath.getAttributes().getNamedItem("name").getNodeValue();
+						String cathedraName = cath.getAttributes()
+								.getNamedItem("name").getNodeValue();
 						cathedras.add(cathedraName);
 					}
 				}
-				
+
 				faculties.put(facultyName, cathedras);
 			}
 		} catch (ParserConfigurationException e) {

@@ -18,4 +18,10 @@
         android:gravity="start"
         android:text="@string/do_imort" />
 
+    <Button
+        android:id="@+id/buttonTimetable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Open timetable" />
+
 </LinearLayout>

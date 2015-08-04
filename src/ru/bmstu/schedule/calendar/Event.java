@@ -27,27 +27,18 @@ public class Event {
 	private boolean allDay;
 	private String rRule;
 	private boolean available;
-	
+
 	private String yearEndRFC2445;
-	
+
 	private static String defaultLocation = "BMSTU";
 	private static TimeZone defaultTimezone = TimeZone.getDefault();
-	
-	private static final String[] EVENT_PROJECTION = {
-		Events._ID,
-		Events.CALENDAR_ID,
-		Events.ORGANIZER,
-		Events.TITLE,
-		Events.DESCRIPTION,
-		Events.DTSTART,
-		Events.DURATION,
-		Events.EVENT_LOCATION,
-		Events.EVENT_TIMEZONE,
-		Events.ALL_DAY,
-		Events.RRULE,
-		Events.AVAILABILITY
-	};
-	
+
+	private static final String[] EVENT_PROJECTION = { Events._ID,
+			Events.CALENDAR_ID, Events.ORGANIZER, Events.TITLE,
+			Events.DESCRIPTION, Events.DTSTART, Events.DURATION,
+			Events.EVENT_LOCATION, Events.EVENT_TIMEZONE, Events.ALL_DAY,
+			Events.RRULE, Events.AVAILABILITY };
+
 	private static final int PROJECTION_ID_INDEX = 0;
 	private static final int PROJECTION_CALENDAR_ID_INDEX = 1;
 	private static final int PROJECTION_ORGANIZER_INDEX = 2;
@@ -60,75 +51,69 @@ public class Event {
 	private static final int PROJECTION_ALL_DAY_INDEX = 9;
 	private static final int PROJECTION_RRULE_INDEX = 10;
 	private static final int PROJECTION_AVAILABILITY_INDEX = 11;
-	
-	private static final String[] EVENT_BASIC_PROJECTION = {
-		Events._ID,
-		Events.CALENDAR_ID,
-		Events.ORGANIZER,
-		Events.TITLE,
-		Events.DTSTART
-	};
-	
+
+	private static final String[] EVENT_BASIC_PROJECTION = { Events._ID,
+			Events.CALENDAR_ID, Events.ORGANIZER, Events.TITLE, Events.DTSTART };
+
 	private static final int BASIC_PROJECTION_ID_INDEX = 0;
 	private static final int BASIC_PROJECTION_CALENDAR_ID_INDEX = 1;
 	private static final int BASIC_PROJECTION_ORGANIZER_INDEX = 2;
 	private static final int BASIC_PROJECTION_TITLE_INDEX = 3;
 	private static final int BASIC_PROJECTION_DTSTART_INDEX = 4;
-	
+
 	private static String rfc2445Duration(int h, int m, int s) {
 		StringBuilder builder = new StringBuilder();
-		builder.append('P').append('T')
-		.append(h).append('H')
-		.append(m).append('M')
-		.append(s).append('S');
+		builder.append('P').append('T').append(h).append('H').append(m)
+				.append('M').append(s).append('S');
 		return builder.toString();
 	}
-	
+
 	private static String rfc2445Duration(Date start, Date end) {
 		long diff = end.getTime() - start.getTime();
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTimeInMillis(diff);
-		return rfc2445Duration(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
+		return rfc2445Duration(calendar.get(Calendar.HOUR_OF_DAY),
+				calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND));
 	}
-	
-	private static final DateFormat rfc2445DateTime = new SimpleDateFormat("yyyyMMdd'T'hhmmss", new Locale("ru"));
-	
+
+	private static final DateFormat rfc2445DateTime = new SimpleDateFormat(
+			"yyyyMMdd'T'hhmmss", new Locale("ru"));
+
 	private static String getOnePairDuration() {
 		return rfc2445Duration(1, 35, 0);
 	}
-	
+
 	public static void setDefaultLocation(String loc) {
 		defaultLocation = loc;
 	}
-	
+
 	public static void setDefaultTimezone(TimeZone tz) {
 		defaultTimezone = tz;
 	}
-	
-	public Event(String organiserEmail, String title, String description, Calendar yearEnd) {
+
+	public Event(String organiserEmail, String title, String description,
+			Calendar yearEnd) {
 		this.organiser = organiserEmail;
 		this.title = title;
 		this.description = description;
-				
+
 		Calendar now = Calendar.getInstance();
 		yearEndRFC2445 = rfc2445DateTime.format(yearEnd.getTime());
-		
-		this.setDtstart(now)
-			.setDuration(getOnePairDuration())
-			.setEventLocation(defaultLocation)
-			.setEventTimezone(defaultTimezone)
-			.setAllDay(false)
-			.setrRule("FREQ=WEEKLY;UNTIL="+yearEndRFC2445)
-			.setAvailable(false);
+
+		this.setDtstart(now).setDuration(getOnePairDuration())
+				.setEventLocation(defaultLocation)
+				.setEventTimezone(defaultTimezone).setAllDay(false)
+				.setrRule("FREQ=WEEKLY;UNTIL=" + yearEndRFC2445)
+				.setAvailable(false);
 	}
-	
+
 	public void save(ContentResolver resolver, long l) {
 		save(resolver, Long.toString(l));
 	}
-	
+
 	public void save(ContentResolver resolver, String calendarId) {
 		ContentValues mDataValues = new ContentValues();
-		
+
 		mDataValues.put(Events.CALENDAR_ID, calendarId);
 		mDataValues.put(Events.ORGANIZER, organiser);
 		mDataValues.put(Events.TITLE, title);
@@ -140,28 +125,29 @@ public class Event {
 		mDataValues.put(Events.ALL_DAY, allDay ? 1 : 0);
 		mDataValues.put(Events.RRULE, rRule);
 		mDataValues.put(Events.AVAILABILITY, available);
-		
+
 		insert(resolver, mDataValues);
 	}
-	
+
 	private static void update(ContentResolver resolver, ContentValues values) {
 		String mSelectionClause = Events._ID + " = ?";
-		String[] mSelectionArgs = {values.getAsString(Events._ID)};
-		resolver.update(Events.CONTENT_URI, values, mSelectionClause, mSelectionArgs);
+		String[] mSelectionArgs = { values.getAsString(Events._ID) };
+		resolver.update(Events.CONTENT_URI, values, mSelectionClause,
+				mSelectionArgs);
 	}
-	
+
 	private static void insert(ContentResolver resolver, ContentValues values) {
 		resolver.insert(Events.CONTENT_URI, values);
 	}
-	
-	private Cursor findExising(ContentResolver resolver, String calendarId) throws Exception {
-		String query = new StringBuilder()
-		.append('(').append(Events.CALENDAR_ID).append(" = ?").append(')')
-		.append(" AND ")
-		.append('(').append(Events.TITLE).append(" = ?").append(')')
-		.toString();
-		
-		String[] mSelectionArgs = {	calendarId, title};
+
+	private Cursor findExising(ContentResolver resolver, String calendarId)
+			throws Exception {
+		String query = new StringBuilder().append('(')
+				.append(Events.CALENDAR_ID).append(" = ?").append(')')
+				.append(" AND ").append('(').append(Events.TITLE)
+				.append(" = ?").append(')').toString();
+
+		String[] mSelectionArgs = { calendarId, title };
 		Cursor c = resolver.query(Events.CONTENT_URI, EVENT_BASIC_PROJECTION,
 				query, mSelectionArgs, null);
 		if (null == c)
@@ -249,12 +235,12 @@ public class Event {
 		this.rRule = rRule;
 		return this;
 	}
-	
+
 	public Event setrRuleTwoWeeks() {
-		this.rRule = "FREQ=WEEKLY;UNTIL="+yearEndRFC2445+";INTERVAL=2";
+		this.rRule = "FREQ=WEEKLY;UNTIL=" + yearEndRFC2445 + ";INTERVAL=2";
 		return this;
 	}
-	
+
 	public Event setrRuleOnce() {
 		this.rRule = "FREQ=DAILY;COUNT=2";
 		return this;
@@ -268,18 +254,18 @@ public class Event {
 		this.available = available;
 		return this;
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder b = new StringBuilder();
 		b.append(" == ").append(title).append(" == ").append('\n')
-		.append("Organiser: ").append(organiser).append('\n')
-		.append(description).append('\n')
-		.append("Time: ").append(dtstart.getTime()).append('\n')
-		.append("TInMills: ").append(dtstart.getTimeInMillis()).append('\n')
-		.append("For Time: ").append(dtstart.getTime().getTime()).append('\n')
-		.append("rRule: ").append(rRule).append('\n')
-		.append(" === \n");
+				.append("Organiser: ").append(organiser).append('\n')
+				.append(description).append('\n').append("Time: ")
+				.append(dtstart.getTime()).append('\n').append("TInMills: ")
+				.append(dtstart.getTimeInMillis()).append('\n')
+				.append("For Time: ").append(dtstart.getTime().getTime())
+				.append('\n').append("rRule: ").append(rRule).append('\n')
+				.append(" === \n");
 		return b.toString();
 	}
 }

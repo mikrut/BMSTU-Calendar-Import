@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string
+        name="SOUND_DISABLED">0</string>
+    <string
+        name="SOUND_VIBRO">1</string>
+    <string
+        name="SOUND_NOCHANGE">2</string>
+</resources>
