@@ -7,11 +7,15 @@
     <string name="do_imort">Импортировать</string>
 	
     <string name="calendar_name">Расписание МГТУ</string>
+    
     <string name="lecture">Лекция</string>
     <string name="seminar">Семинар</string>
+    <string name="laboratory">Лабораторная работа</string>
+    
     <string name="teacher">Преподаватель</string>
     <string name="auditorium">Аудитория</string>
     <string name="groups">Группы</string>
+    
     <string name="pref_sound">Звук во время занятий</string>
     <string name="pref_sound_summary">Выберите звуковой режим телефона во время проведения занятий.</string>
     <string name="settings_schedule">Расписание</string>
@@ -25,7 +29,9 @@
     <string name="prefAlarmTimeSummary">За сколько часов до занятий прикажете будить?</string>
     <string name="prefAlarmSound">Звук будильника</string>
     <string name="prefAlarmSoundSummary">Выберите звук для пробуждения перед занятиями</string>
+    
     <string name="weekTimetable">Расписание на неделю</string>
     <string name="choose_group">Выберите группу</string>
     <string name="choose_faculty">Выберите факультет</string>
+    
 </resources>

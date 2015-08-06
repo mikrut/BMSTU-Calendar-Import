@@ -45,6 +45,11 @@ public class SemesterInfo {
 		
 		holidaysBegin = getDateFromNode("holidays_begin", attributes);
 		holidaysEnd = getDateFromNode("holidays_end", attributes);
+		
+		setDayToEnd(examsEnd);
+		setDayToEnd(theoryEnd);
+		setDayToEnd(testsEnd);
+		setDayToEnd(holidaysEnd);
 	}
 	
 	private static Calendar getDateFromNode(String fieldName, NamedNodeMap attributes) {
@@ -57,5 +62,11 @@ public class SemesterInfo {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	private static void setDayToEnd(Calendar day) {
+		day.set(Calendar.HOUR_OF_DAY, 23);
+		day.set(Calendar.MINUTE, 59);
+		day.set(Calendar.SECOND, 59);
 	}
 }

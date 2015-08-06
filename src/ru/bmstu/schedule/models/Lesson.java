@@ -22,14 +22,13 @@ public class Lesson {
 	};
 	
 	public enum LessonType {
-		LECTURE, SEMINAR;
+		LECTURE, SEMINAR, LABORATORY;
 		
 		@Override
 		public String toString() {
-			if (this.equals(LECTURE))
-				return lectureName;
-			else
-				return seminarName;
+			if (equals(LECTURE)) return lectureName;
+			else if (equals(LABORATORY)) return laboratoryName;
+			else return seminarName;
 		}
 	};
 
@@ -52,9 +51,12 @@ public class Lesson {
 	private Stream stream = null;
 	@Nullable
 	private Group[] groups = null;
+	private LessonType lessonType = LessonType.SEMINAR;
 
 	private String defaultUndefinedName = "Unknown";
 	private static String lectureName = "Lecture";
+	private static String seminarName = "Seminar";
+	private static String laboratoryName = "Laboratory";
 
 	public static String getLectureName() {
 		return lectureName;
@@ -71,8 +73,14 @@ public class Lesson {
 	public static void setSeminarName(String seminarName) {
 		Lesson.seminarName = seminarName;
 	}
+	
+	public static String getLaboratoryName() {
+		return laboratoryName;
+	}
 
-	private static String seminarName = "Seminar";
+	public static void setLaboratoryName(String laboratoryName) {
+		Lesson.laboratoryName = laboratoryName;
+	}
 
 	public Lesson(JSONObject lessonJSON) throws JSONException {
 		if (lessonJSON.has("time"))
@@ -81,12 +89,9 @@ public class Lesson {
 
 		repeatType = getTerm(lessonJSON);
 		if (lessonJSON.has("wday"))
-			wday = lessonJSON.getInt("wday");// DayOfWeek.of(lessonJSON.getInt("wday")
-												// + 1); // + 1 is necessary to
-												// cast to ISO standard
+			wday = lessonJSON.getInt("wday");
 
-		aud = Lesson.<Auditorium> extractClass(lessonJSON, "aud",
-				Auditorium.class);
+		aud = Lesson.<Auditorium> extractClass(lessonJSON, "aud", Auditorium.class);
 		pub = Lesson.<Lecturer> extractClass(lessonJSON, "pub", Lecturer.class);
 
 		if (lessonJSON.has("activity")) {
@@ -96,6 +101,7 @@ public class Lesson {
 				activityType = ActivityType.CUSTOM;
 
 			name = extractName(activity);
+			lessonType = extractLessonType(activity);
 		}
 
 		if (lessonJSON.has("stream"))
@@ -107,8 +113,7 @@ public class Lesson {
 
 	private static RepeatType getTerm(JSONObject lessonJSON) {
 		// term ::= 17-all | 17-w1 | 17-w2
-		// i.e. ALL, NUMERATOR (������ ���������),
-		// DENOMINATOR (������ �����������)
+		// i.e. ALL, NUMERATOR, DENOMINATOR
 		try {
 			if (lessonJSON.has("term"))
 				switch (lessonJSON.getString("term").charAt(4)) {
@@ -158,6 +163,23 @@ public class Lesson {
 			}
 		}
 		return longestName;
+	}
+	
+	private static LessonType extractLessonType(JSONObject activity) throws JSONException {
+		final String lectureRegex = "^.*-l$";
+		final String seminarRegex = "^.*-s$";
+		final String laboratoryRegex = "^.*-a$";
+		if (activity.has("id")) {
+			String id = activity.getString("id");
+			if (id.matches(lectureRegex)) {
+				return LessonType.LECTURE;
+			} else if (id.matches(seminarRegex)) {
+				return LessonType.SEMINAR;
+			} else if (id.matches(laboratoryRegex)) {
+				return LessonType.LABORATORY;
+			}
+		}
+		return LessonType.SEMINAR;
 	}
 
 	@Override
@@ -275,9 +297,7 @@ public class Lesson {
 	}
 	
 	public LessonType getLessonType() {
-		if (groups.length > 1)
-			return LessonType.LECTURE;
-		return LessonType.SEMINAR;
+		return lessonType;
 	}
 
 	public String getStream() {

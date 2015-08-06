@@ -76,7 +76,7 @@ public class CalendarSaver {
 					userName, resolver);
 			cal.save();
 		} else {
-			cal.deleteAllEvents();
+			cal.deleteAllEvents(semesterStart, semesterEnd);
 		}
 		Log.v("SaveToCalendar", cal.toString());
 		for (Lesson l : lessons) {

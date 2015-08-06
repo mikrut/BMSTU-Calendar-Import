@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
+import android.util.Log;
 
 public class Calendar {
 	private long id;
@@ -122,6 +123,18 @@ public class Calendar {
 	public void deleteAllEvents() {
 		String mSelectionClause = Events.CALENDAR_ID + " = ?";
 		String[] mSelectionArgs = { String.valueOf(getId()) };
+		resolver.delete(Events.CONTENT_URI, mSelectionClause, mSelectionArgs);
+	}
+	
+	public void deleteAllEvents(java.util.Calendar start, java.util.Calendar end) {
+		String mSelectionClause = Events.CALENDAR_ID + " = ? AND " +
+				Events.DTSTART + " >= ? AND " +
+				Events.DTSTART + " <= ?";
+		String[] mSelectionArgs = {
+				String.valueOf(getId()),
+				Long.toString(start.getTimeInMillis()),
+				Long.toString(end.getTimeInMillis())
+				};
 		resolver.delete(Events.CONTENT_URI, mSelectionClause, mSelectionArgs);
 	}
 

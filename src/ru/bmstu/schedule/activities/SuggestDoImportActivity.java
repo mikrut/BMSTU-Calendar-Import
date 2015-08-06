@@ -64,6 +64,7 @@ public class SuggestDoImportActivity extends Activity {
 		
 		Lesson.setLectureName(getString(R.string.lecture));
 		Lesson.setSeminarName(getString(R.string.seminar));
+		Lesson.setLaboratoryName(getString(R.string.laboratory));
 
 		CalendarSaver.setTeacherCall(getString(R.string.teacher));
 		CalendarSaver.setAuditoriumCall(getString(R.string.auditorium));

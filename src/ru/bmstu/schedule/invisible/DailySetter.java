@@ -24,7 +24,7 @@ public class DailySetter extends BroadcastReceiver {
 		String action = intent.getAction();
         if (action.equals(ACTION_SET_ALARMS)) {
             setSoundManipulationAlarms(context);
-        } else if (action.equals("android.intent.action.BOOT_COMPLETED")
+        } else if (action.equals(Intent.ACTION_BOOT_COMPLETED)
         		|| action.equals(ACTION_SET_ALL)) {
         	setDailySetterAlarm(context);
         	setSoundManipulationAlarms(context);
@@ -59,9 +59,6 @@ public class DailySetter extends BroadcastReceiver {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		Calendar now = Calendar.getInstance();
-		setSoundManipulationAlarm(now, SoundManager.OFF_ACTION, context);
 	}
 	
 	private static void setSoundManipulationAlarm(Calendar time, String action, Context context) {

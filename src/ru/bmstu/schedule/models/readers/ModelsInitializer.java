@@ -5,14 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,15 +24,15 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import android.content.Context;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import ru.bmstu.schedule.models.Auditorium;
 import ru.bmstu.schedule.models.Group;
 import ru.bmstu.schedule.models.Lecturer;
 import ru.bmstu.schedule.models.Lesson;
 import ru.bmstu.schedule.models.SemesterInfo;
 import ru.bmstu.schedule.models.Stream;
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 public abstract class ModelsInitializer {
 	private static String auditoriumDefaultName = "aud";
