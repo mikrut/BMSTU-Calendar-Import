@@ -23,5 +23,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Open timetable" />
+    
+    <Button
+        android:id="@+id/buttonSoundOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sound on" />
+    
+    <Button
+        android:id="@+id/buttonSoundOff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sound off" />
+    
 
 </LinearLayout>

@@ -26,4 +26,6 @@
     <string name="prefAlarmSound">Звук будильника</string>
     <string name="prefAlarmSoundSummary">Выберите звук для пробуждения перед занятиями</string>
     <string name="weekTimetable">Расписание на неделю</string>
+    <string name="choose_group">Выберите группу</string>
+    <string name="choose_faculty">Выберите факультет</string>
 </resources>

@@ -185,12 +185,21 @@ public class Lesson {
 		return b.toString();
 	}
 
-	public Calendar getDTime(Calendar d) {
-		Calendar t = (Calendar) d.clone();
+	public Calendar setBeginTimeForDay(Calendar day) {
+		Calendar t = (Calendar) day.clone();
 		t.set(Calendar.SECOND, 0);
 		t.set(Calendar.MILLISECOND, 0);
 		t.set(Calendar.HOUR_OF_DAY, timetable[pairIndex][0][0]);
 		t.set(Calendar.MINUTE, timetable[pairIndex][0][1]);
+		return t;
+	}
+	
+	public Calendar setEndTimeForDay(Calendar day) {
+		Calendar t = (Calendar) day.clone();
+		t.set(Calendar.SECOND, 0);
+		t.set(Calendar.MILLISECOND, 0);
+		t.set(Calendar.HOUR_OF_DAY, timetable[pairIndex][1][0]);
+		t.set(Calendar.MINUTE, timetable[pairIndex][1][1]);
 		return t;
 	}
 
@@ -236,7 +245,7 @@ public class Lesson {
 
 		Event e = new Event(organizer, getName(), description, semesterEnd)
 				.setAllDay(false).setAvailable(false).setDtstart(beginDateTime)
-				.setEventLocation("BMSTU: " + getAud());
+				.setEventLocation("Ã√“”: " + getAud());
 
 		if (repeatType != RepeatType.ALL)
 			e.setrRuleTwoWeeks();

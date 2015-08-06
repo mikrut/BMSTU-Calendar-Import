@@ -1,4 +1,4 @@
-package ru.bmstu.schedule.graph;
+package ru.bmstu.schedule.graph.preferences;
 
 import android.os.Parcel;
 import android.os.Parcelable;

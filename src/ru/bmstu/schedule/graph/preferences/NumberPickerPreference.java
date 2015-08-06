@@ -1,4 +1,4 @@
-package ru.bmstu.schedule.graph;
+package ru.bmstu.schedule.graph.preferences;
 
 import ru.bmstu.schedule.calendar.R;
 import android.content.Context;

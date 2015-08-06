@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android" >
-   <header android:fragment="ru.bmstu.schedule.activities.SettingsActivity$ScheduleFragment"
+   <header android:fragment="ru.bmstu.schedule.calendar.helpers.ScheduleFragment"
        android:title="@string/settings_schedule"
        android:summary="@string/settings_scheduleSummary"></header> 
 

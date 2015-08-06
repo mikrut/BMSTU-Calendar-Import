@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="prefScreenCalendar" >
     <ListPreference
         android:key="pref_sound"
         android:title="@string/pref_sound"
@@ -8,6 +9,9 @@
         android:entries="@array/pref_sound_entries"
         android:entryValues="@array/pref_sound_entriesValues"
         android:defaultValue="@string/SOUND_DISABLED" />
+    <ru.bmstu.schedule.graph.GroupPreference 
+        android:key="pref_group"
+        android:title="@string/choose_group"/>
     <SwitchPreference
         android:key="pref_alarm"
         android:title="@string/pref_alarm"

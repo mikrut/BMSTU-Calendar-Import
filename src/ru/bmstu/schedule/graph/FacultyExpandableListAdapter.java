@@ -1,17 +1,13 @@
 package ru.bmstu.schedule.graph;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.bmstu.schedule.activities.SuggestDoImportActivity;
-import ru.bmstu.schedule.calendar.helpers.ModelsInitializer;
 import ru.bmstu.schedule.models.Cathedra;
 import ru.bmstu.schedule.models.Group;
+import ru.bmstu.schedule.models.readers.ModelsInitializer;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.AssetManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,17 +19,23 @@ public class FacultyExpandableListAdapter extends BaseExpandableListAdapter {
 
 	List<Cathedra> cathedras = new ArrayList<Cathedra>();
 	private Context context;
-
+	private OnClickListener elementListener;
+	
 	public FacultyExpandableListAdapter(Context context, String json,
 			List<String> cathedraNames) throws IOException {
-		this.context = context;
-
+		this.context = context;	
 		for (String name : cathedraNames) {
 			Cathedra cathedra = new Cathedra(name);
 			cathedra.setGroupsList(ModelsInitializer.getGroupsForCathedra(json,
 					name));
 			cathedras.add(cathedra);
 		}
+	}
+
+	public FacultyExpandableListAdapter(Context context, String json,
+			List<String> cathedraNames, OnClickListener elementListener) throws IOException {
+		this(context, json, cathedraNames);
+		this.elementListener = elementListener;
 	}
 
 	@Override
@@ -79,8 +81,7 @@ public class FacultyExpandableListAdapter extends BaseExpandableListAdapter {
 		if (null == convertView) {
 			convertView = new TextView(context);
 		}
-		((TextView) convertView).setText(cathedras.get(groupPosition)
-				.toString());
+		((TextView) convertView).setText(cathedras.get(groupPosition).toString());
 		((TextView) convertView).setGravity(Gravity.CENTER);
 		return convertView;
 	}
@@ -91,16 +92,9 @@ public class FacultyExpandableListAdapter extends BaseExpandableListAdapter {
 		if (null == convertView) {
 			convertView = new TextView(context);
 		}
-		((TextView) convertView).setText(cathedras.get(groupPosition)
-				.get(childPosition).toString());
-		((TextView) convertView).setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Intent i = new Intent(context, SuggestDoImportActivity.class);
-				i.putExtra("CHOOSEN_GROUP_NAME", ((TextView) v).getText()
-						.toString());
-				context.startActivity(i);
-			}
-		});
+		((TextView) convertView).setText(cathedras.get(groupPosition).get(childPosition).toString());
+		if (null != elementListener)
+			((TextView) convertView).setOnClickListener(elementListener);
 		return convertView;
 	}
 

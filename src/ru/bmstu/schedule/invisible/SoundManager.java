@@ -9,11 +9,8 @@ import android.media.AudioManager;
 import android.preference.PreferenceManager;
 
 public class SoundManager extends BroadcastReceiver {
-	
-	public final static String ON_ACTION = "ru.bmstu.schedule.invisible.SoundManager.TURN_ON";
-	public final static String OFF_ACTION = "ru.bmstu.schedule.invisible.SoundManager.TURN_OFF";
-
-	private static Integer lastVolume = null;
+	public final static String ON_ACTION = SoundManager.class.getCanonicalName()+".TURN_ON";
+	public final static String OFF_ACTION = SoundManager.class.getCanonicalName()+".TURN_OFF";
 	
 	@Override
 	public void onReceive(Context context, Intent intent) {
@@ -29,22 +26,18 @@ public class SoundManager extends BroadcastReceiver {
 	
 	private void turnOn(Context context, String manipulateAlarms) {
 		if (! manipulateAlarms.equals(context.getString(R.string.SOUND_NOCHANGE))) {
-			
 			AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 			
-			if (lastVolume == null)
-				lastVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
+			int volume = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
 			
 			audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-			audioManager.setStreamVolume(AudioManager.STREAM_RING, lastVolume, 0);
+			audioManager.setStreamVolume(AudioManager.STREAM_RING, volume, 0);
 		}
 	}
 	
 	private void turnOff(Context context, String manipulateAlarms) {
 		if (! manipulateAlarms.equals(context.getString(R.string.SOUND_NOCHANGE))) {
 			AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-			
-			lastVolume = audioManager.getStreamVolume(AudioManager.STREAM_RING);
 			
 			if (manipulateAlarms.equals(context.getString(R.string.SOUND_DISABLED))) {
 				audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);

@@ -1,22 +1,14 @@
 package ru.bmstu.schedule.graph;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Locale;
 
 import ru.bmstu.schedule.calendar.R;
 import ru.bmstu.schedule.models.Lesson;
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Color;
-import android.text.Layout;
 import android.text.Spanned;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -45,7 +37,7 @@ public class DayView extends TableLayout {
 					TextView timeText = (TextView) row.getChildAt(0);
 					TextView pairText = (TextView) row.getChildAt(1);
 					
-					String text = String.format("%d:%02d - %d:%02d",
+					String text = String.format(Locale.getDefault(), "%d:%02d - %d:%02d",
 							timetable[i-1][0][0], timetable[i-1][0][1],
 							timetable[i-1][1][0], timetable[i-1][1][1]);
 					pairsTexts[i-1] = pairText;
