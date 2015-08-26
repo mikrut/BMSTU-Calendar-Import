@@ -14,4 +14,14 @@
         <attr name="android:layout_height" />
         <attr name="dayName" format="string" />
     </declare-styleable>
+    <declare-styleable name="TimetableRowView">
+        <attr name="android:id"/>
+        <attr name="android:layout_width" />
+        <attr name="android:layout_height" />
+        <attr name="name" format="string" />
+        <attr name="time" format="string" />
+        <attr name="lecturer" format="string" />
+        <attr name="auditorium" format="string" />
+        <attr name="pairType" format="string" />
+    </declare-styleable>
 </resources>

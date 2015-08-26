@@ -1,75 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:shrinkColumns="1" >
-    <TableRow
-        android:background="#004D72"
-        android:layout_width="match_parent"
-        android:gravity="center">
-         <TextView
-             android:id="@+id/title"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:textColor="#ffffff" />
-    </TableRow>
-    <TableRow android:background="#888888">
-         <TextView
-             android:id="@+id/time"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-         <TextView
-             android:id="@+id/lesson"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-    </TableRow>
-    <TableRow android:background="#ffffff">
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-    </TableRow>
-    <TableRow android:background="#888888">
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-    </TableRow>
-    <TableRow android:background="#ffffff">
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-    </TableRow>
-    <TableRow android:background="#888888">
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-    </TableRow>
-    <TableRow android:background="#ffffff">
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-    </TableRow>
-    <TableRow android:background="#888888">
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"/>
-    </TableRow>
+    android:orientation="vertical"
+    android:shrinkColumns="1" xmlns:app="http://schemas.android.com/apk/res/ru.bmstu.schedule.calendar">
 
-</TableLayout>
+    <TextView
+        android:id="@+id/dayName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4CF6E8"
+        android:gravity="center"
+        android:text="Понедельник"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
+    <ru.bmstu.schedule.graph.TimetableRowView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        app:time="8:30 10:05" />
+
+    <ru.bmstu.schedule.graph.TimetableRowView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        app:time="10:15 11:50" />
+    <ru.bmstu.schedule.graph.TimetableRowView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        app:time="12:00 13:35" />
+    <ru.bmstu.schedule.graph.TimetableRowView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        app:time="13:50 15:25" />
+    <ru.bmstu.schedule.graph.TimetableRowView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        app:time="15:40 17:15" />
+    <ru.bmstu.schedule.graph.TimetableRowView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        app:time="17:25 19:00" />
+    <ru.bmstu.schedule.graph.TimetableRowView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        app:time="19:10 20:45" />
+</LinearLayout>

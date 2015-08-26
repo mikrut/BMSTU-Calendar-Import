@@ -4,16 +4,20 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
+import ru.bmstu.schedule.activities.WeekActivity;
+import ru.bmstu.schedule.calendar.R;
 import ru.bmstu.schedule.models.Lesson;
 import ru.bmstu.schedule.models.SemesterInfo;
 import ru.bmstu.schedule.models.readers.ModelsInitializer;
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 
 public class DailySetter extends BroadcastReceiver {
 	public final static String ACTION_SET_ALARMS = DailySetter.class.getCanonicalName()+".ACTION_SET_ALARMS";
@@ -83,6 +87,7 @@ public class DailySetter extends BroadcastReceiver {
 		Calendar midnight = Calendar.getInstance();
 		midnight.add(Calendar.DAY_OF_YEAR, 1);
 		midnight.set(Calendar.MILLISECOND, 0);
+		//midnight.add(Calendar.SECOND, 30);
 		midnight.set(Calendar.SECOND, 0);
 		midnight.set(Calendar.MINUTE, 0);
 		midnight.set(Calendar.HOUR,   0);

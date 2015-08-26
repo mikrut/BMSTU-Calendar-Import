@@ -12,6 +12,7 @@ import ru.bmstu.schedule.models.Lesson;
 import ru.bmstu.schedule.models.SemesterInfo;
 import ru.bmstu.schedule.models.readers.ModelsInitializer;
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -112,6 +113,9 @@ public class SuggestDoImportActivity extends Activity {
 			i.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT, ScheduleFragment.class.getName());
 			this.startActivity(i);
 		}
+		Intent i = new Intent(this, DailySetter.class);
+		i.setAction(DailySetter.ACTION_SET_ALARMS);
+		sendBroadcast(i);
 		
 		TextView txt = (TextView) findViewById(R.id.textViewGroupHelper);
 		txt.setText(pref.getString("pref_group", ""));

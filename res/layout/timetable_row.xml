@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#ffffff" >
+
+	<TextView
+	    android:id="@+id/timetable_row_time"
+	    android:layout_width="wrap_content"
+	    android:layout_height="fill_parent"
+	    android:background="#0C8CE5"
+	    android:gravity="center|center_vertical"
+	    android:padding="8dp"
+	    android:text="8:30 10:00"
+	    android:textColor="#ffffff"
+	    android:textSize="@dimen/timetable_time_size"
+	    android:width="72dp"
+	    android:layout_marginRight="8dp" />
+	
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:gravity="center_vertical"
+	    android:orientation="vertical" >
+
+	    <TextView
+	        android:id="@+id/timetable_row_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Радиотехнические цепи и системы"
+	        android:textColor="#000000"
+	        android:textSize="18sp" />
+	    <TextView
+	        android:id="@+id/timetable_row_pairType"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Лабораторная работа"
+	        android:textColor="#000000"
+	        android:textSize="13sp"/>
+	    <TableLayout
+	        android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:shrinkColumns="1" >
+			<TableRow
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content">
+				<TextView
+				    android:id="@+id/timetable_row_lecturerHelper"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="Преподаватель: "
+				    android:textColor="#000000" />
+				<TextView
+				    android:id="@+id/timetable_row_lecturer"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="Канатников, Крищенко"
+				    android:textColor="#000000" />
+			</TableRow>
+			
+			<TableRow
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content">
+				<TextView
+				    android:id="@+id/timetable_row_auditoriumHelper"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="Аудитория: "
+				    android:textColor="#000000" />
+				<TextView
+				    android:id="@+id/timetable_row_auditorium"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="501ю"
+				    android:textColor="#000000" />
+			</TableRow>
+		</TableLayout>
+	</LinearLayout>
+	
+</LinearLayout>

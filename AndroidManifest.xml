@@ -37,16 +37,23 @@
     	    android:enabled="true"
     	    android:name="ru.bmstu.schedule.invisible.SoundManager"
     	    android:exported="false">
-    	    <action android:name="ru.bmstu.schedule.invisible.SoundManager.TURN_ON"/>
-    	    <action android:name="ru.bmstu.schedule.invisible.SoundManager.TURN_OFF"/>
+            <intent-filter>
+	    	    <action android:name="ru.bmstu.schedule.invisible.SoundManager.TURN_ON"/>
+	    	    <action android:name="ru.bmstu.schedule.invisible.SoundManager.TURN_OFF"/>
+    	    </intent-filter>
     	</receiver>
     	<receiver
     	    android:enabled="true"
     	    android:name="ru.bmstu.schedule.invisible.DailySetter"
-    	    android:exported="false">
-    	    <action android:name="android.intent.action.BOOT_COMPLETED"/>
-    	    <action android:name="ru.bmstu.schedule.invisible.DailySetter.ACTION_SET_ALL"/>
-    	    <action android:name="ru.bmstu.schedule.invisible.DailySetter.ACTION_SET_ALARMS"/>
+    	    android:exported="true"
+    	    android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+    	    <intent-filter>
+	    	    <action android:name="android.intent.action.BOOT_COMPLETED">
+	    	        <category android:name="android.intent.category.DEFAULT"/> 
+	    	    </action>
+	    	    <action android:name="ru.bmstu.schedule.invisible.DailySetter.ACTION_SET_ALL"/>
+	    	    <action android:name="ru.bmstu.schedule.invisible.DailySetter.ACTION_SET_ALARMS"/>
+    	    </intent-filter>
     	</receiver>
     </application>
 
