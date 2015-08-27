@@ -9,7 +9,7 @@
         android:entries="@array/pref_sound_entries"
         android:entryValues="@array/pref_sound_entriesValues"
         android:defaultValue="@string/SOUND_DISABLED" />
-    <ru.bmstu.schedule.graph.GroupPreference 
+    <ru.bmstu.schedule.graph.preferences.GroupPreference 
         android:key="pref_group"
         android:title="@string/choose_group"/>
     <SwitchPreference
@@ -18,14 +18,14 @@
         android:summaryOn="@string/pref_alarmOn"
         android:summaryOff="@string/pref_alarmOff"
         android:defaultValue="false" />
-    <ru.bmstu.schedule.graph.NumberPickerPreference
+    <ru.bmstu.schedule.graph.preferences.NumberPickerPreference
         android:key="pref_pairNoAlarm"
         android:title="@string/prefPairNoAlarm"
         android:summary="@string/prefPairNoAlarmSummary"
         min="2"
         max="5"
         android:defaultValue="2" />
-    <ru.bmstu.schedule.graph.NumberPickerPreference
+    <ru.bmstu.schedule.graph.preferences.NumberPickerPreference
         android:key="pref_alarmTime"
         android:title="@string/prefAlarmTime"
         android:summary="@string/prefAlarmTimeSummary"
