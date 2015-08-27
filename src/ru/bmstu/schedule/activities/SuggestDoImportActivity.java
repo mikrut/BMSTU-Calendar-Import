@@ -111,7 +111,7 @@ public class SuggestDoImportActivity extends Activity {
 		if (!pref.contains("pref_group")) {
 			Intent i = new Intent(this, SettingsActivity.class);
 			i.putExtra(SettingsActivity.EXTRA_SHOW_FRAGMENT, ScheduleFragment.class.getName());
-			this.startActivity(i);
+			startActivity(i);
 		}
 		Intent i = new Intent(this, DailySetter.class);
 		i.setAction(DailySetter.ACTION_SET_ALARMS);

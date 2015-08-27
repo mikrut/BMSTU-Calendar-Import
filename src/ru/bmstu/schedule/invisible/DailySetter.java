@@ -50,7 +50,9 @@ public class DailySetter extends BroadcastReceiver {
 			int nowWday = (now.get(Calendar.DAY_OF_WEEK) + (7 - Calendar.MONDAY)) % 7;
 			
 			SemesterInfo sem = ModelsInitializer.getSemesterInfo(context);
+			// weekIndex = weekNumber mod 2
 			int weekIndex = (now.get(Calendar.WEEK_OF_YEAR)-sem.theoryBegin.get(Calendar.WEEK_OF_YEAR)) % 2;
+			if (weekIndex < 0) weekIndex += 2;
 			
 			for (Lesson l : lessons) {
 				if (l.getWday() == nowWday && l.getRepeatType().ordinal() == weekIndex) {
